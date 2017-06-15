@@ -4,12 +4,15 @@ import {
   Text,
   View,
   Button,
-  AsyncStorage
+  AsyncStorage,
+  TouchableHighlight,
+  Image
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import SocketIOClient from 'socket.io-client';
 import { GiftedChat } from 'react-native-gifted-chat';
 import axios from 'axios';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 class Chat extends Component {
   constructor(props) {
@@ -108,14 +111,26 @@ class Chat extends Component {
     });
   }
 
-  render() {
-    var user = {
-            _id: 1,
-            name: 'React Native',
-            avatar: 'https://facebook.github.io/react/img/logo_og.png',
-          };
+  handleBack(tag){
+    this.props.navigator.pop();
+  }
 
+  render() {
+    console.log('from chats: ', this.state.other_user)
+    const backIcon = (<Icon name="arrow-circle-left" size={30} color="#2196F3" />);
     return (<View style = {{ width: 375, height: 600, backgroundColor: 'whitesmoke' }} >
+      <View style={styles.titleContainer}>
+        <TouchableHighlight
+        style={styles.backIcon}
+        onPress={ ()=>{this.handleBack()}}
+        >{backIcon}</TouchableHighlight>
+        {
+          (!this.state.other_user) 
+          ? <Text>hello</Text>
+          :<Image style={styles.image} source={{uri: this.state.other_user.avatar}}/>
+        }
+      </View>
+
       <GiftedChat messages = { this.state.messages }
       onSend = {this.onSend}
       user = {this.state.user}

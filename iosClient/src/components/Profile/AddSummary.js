@@ -9,6 +9,8 @@ import {
   AsyncStorage
 } from 'react-native';
 import axios from 'axios';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 class AddSummary extends Component{
   constructor (props) {
@@ -41,6 +43,10 @@ class AddSummary extends Component{
     this.addSummaryDetails();
   }
 
+  handleBack(tag){
+    this.props.navigator.pop();
+  }
+
   async addSummaryDetails(){
     try {  
       await AsyncStorage.multiGet(['userId','AuthToken' ], (err, result) => {
@@ -66,8 +72,16 @@ class AddSummary extends Component{
 
 
   render(){
+    const backIcon = (<Icon name="arrow-circle-left" size={30} color="#2196F3" />)
   	return(
       <View style={styles.container}>
+          <View style={styles.titleContainer}>
+            <TouchableHighlight
+            style={styles.backIcon}
+            onPress={ ()=>{this.handleBack()}}
+            >{backIcon}</TouchableHighlight>
+            <Text style={styles.titleText}>Write a short bio</Text>
+          </View>
           <Text style={styles.charDisplay}>250 left</Text>
           <View style={styles.summaryContainer}>
             <TextInput 
@@ -82,7 +96,7 @@ class AddSummary extends Component{
               <View style={styles.tagRowContainer}>
                 <Button
                   onPress={this.handleCancel.bind(this)}
-                  title="Cancel"
+                  title="Clear"
                   color="#841584"
                   accessibilityLabel="Learn more about this purple button"
                 />
@@ -133,7 +147,24 @@ var styles = StyleSheet.create({
     fontSize: 15,
     textAlign: 'right',
     fontFamily: 'Avenir-Medium',
-  }
+  },
+  backIcon:{
+    margin: 15,
+  },
+  titleContainer:{
+    flexDirection: 'row',
+    margin: 5,
+    padding:8,
+  },
+  titleText:{
+    marginTop: 12,
+    marginLeft: 25,
+    textAlign: 'center',
+    fontFamily: 'Avenir-Medium',
+    fontSize: 25,
+    fontWeight: 'bold',
+    color: '#2196F3'
+    },
 });
 
 

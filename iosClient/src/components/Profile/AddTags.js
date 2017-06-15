@@ -10,6 +10,8 @@ import {
   ScrollView
 } from 'react-native';
 import Separator from '../Utilities/Separator';
+import Profile from './Profile';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import axios from 'axios';
 
 class AddTags extends Component{
@@ -96,7 +98,12 @@ class AddTags extends Component{
     this.addTagDetails();
   }
 
+  handleBack(tag){
+    this.props.navigator.pop();
+  }
+
   render(){
+    const backIcon = (<Icon name="arrow-circle-left" size={30} color="#2196F3" />)
     var TagsVerbiage = "Help us show you relevant matches! Enter your fields, skills or passions";
     var tagValues = this.state.tags;
     var context= this;
@@ -120,17 +127,25 @@ class AddTags extends Component{
     })
   	return(
       <ScrollView style={styles.container}>
+        <View style={styles.titleRowContainer}>
+          <TouchableHighlight 
+          style={styles.backIcon}
+          onPress={()=>{this.handleBack()}}>
+            <Text>{backIcon}</Text>
+          </TouchableHighlight>
+          <Text style={styles.titleText}>Your Interests</Text>
+        </View>
         <Text style={styles.TagsVerbiage}>{TagsVerbiage}</Text>
-        <View style={styles.tagsContainer}>
+        <View style={styles.skillsContainer}>
           <TextInput 
           style={styles.searchInput}
           placeholder={'# Enter a single keyword'}
           value={this.state.text}
           onChange={this.handleChange.bind(this)} />
-          <View style={styles.tagRowContainer}>
+          <View style={styles.buttonRowContainer}>
             <Button
               onPress={this.handleCancel.bind(this)}
-              title="Cancel"
+              title="Clear"
               color="#841584"
               accessibilityLabel="Learn more about this purple button"
             />
@@ -154,17 +169,49 @@ var styles = StyleSheet.create({
       paddingTop: 5,
       backgroundColor: '#F2F2F2'
     },
-    tagContainer:{
-      flexDirection: 'row',
-      margin: 5,
-      padding:8,
-      justifyContent: 'space-between'
-    },
     tagRowContainer:{
       flexDirection: 'row',
       margin: 5,
       padding:8,
       justifyContent: 'space-between'
+    },
+    buttonRowContainer:{
+      flexDirection: 'row',
+      margin: 5,
+      padding:8,
+      justifyContent: 'space-between'
+    },
+    skillsContainer:{
+      flexDirection: 'column',
+      margin: 5,
+      padding:8,
+      justifyContent: 'space-between'
+    },
+    titleRowContainer:{
+      flexDirection: 'row',
+      margin: 5
+    },
+    backIcon:{
+      margin: 15,
+    },
+    backButtonText:{
+      textAlign: 'center',
+      fontFamily: 'Avenir-Medium',
+      fontSize: 14,
+      fontWeight: 'bold',
+      color: 'white'
+    },
+    titleText:{
+      marginTop: 12,
+      marginLeft: 45,
+      textAlign: 'center',
+      fontFamily: 'Avenir-Medium',
+      fontSize: 25,
+      fontWeight: 'bold',
+      color: '#2196F3'
+    },
+    pageTitle:{
+      margin: 20,
     },
     tagsContainer:{
       backgroundColor: '#FFFFFF'
