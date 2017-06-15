@@ -26,9 +26,20 @@ class AddEducation extends Component{
     console.log(event.nativeEvent.text)
   }
 
+  handleBack(tag){
+    this.props.navigator.pop();
+  }
+
   render(){
     return(
       <View style={styles.container}>
+        <View style={styles.titleContainer}>
+          <TouchableHighlight
+          style={styles.backIcon}
+          onPress={ ()=>{this.handleBack()}}
+          >{backIcon}</TouchableHighlight>
+          <Text style={styles.titleText}>Add Education</Text>
+        </View>
         <View style={styles.eduContainer}>
           <Text style={styles.name}>Degrees</Text>
           <TextInput 
@@ -45,6 +56,18 @@ class AddEducation extends Component{
             placeholder={'Enter a university'}
             value={this.state.university}
             onChange={this.handleUniversityChange.bind(this)} />
+        </View>
+        <View style={styles.tagRowContainer}>
+          <Button
+            onPress={this.handleCancel.bind(this)}
+            title="Clear"
+            color="#841584"
+          />
+          <Button
+            onPress={this.handleOk.bind(this)}
+            title="Ok"
+            color="#841584"
+          />
         </View>
       </View>
     );
@@ -78,6 +101,29 @@ var styles = StyleSheet.create({
       fontSize: 14,
       padding: 5,
       fontFamily: 'Avenir-Medium'
+    },
+    backIcon:{
+      margin: 15,
+    },
+    titleContainer:{
+      flexDirection: 'row',
+      margin: 5,
+      padding:8,
+    },
+    titleText:{
+      marginTop: 12,
+      marginLeft: 15,
+      textAlign: 'center',
+      fontFamily: 'Avenir-Medium',
+      fontSize: 25,
+      fontWeight: 'bold',
+      color: '#2196F3'
+      },
+    tagRowContainer:{
+      flexDirection: 'row',
+      margin: 5,
+      padding:8,
+      justifyContent: 'space-between'
     },
 });
 

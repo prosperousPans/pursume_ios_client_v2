@@ -79,9 +79,9 @@ class Login extends Component{
     _saveUser(profile, token){
       var context = this;
       var idToken= token.idToken;
-
+    
       var options = { 
-          authid: profile.userId,
+          authid: profile.userId.split('|')[1],
           nickname: profile.nickname
       }
 
@@ -131,7 +131,7 @@ class Login extends Component{
 	render(){
 		return(
 			<View style={styles.mainContainer}>
-				<Text style={styles.title}> Pursumè </Text>
+				<Text style={styles.title}> Pursumé </Text>
 				<TouchableHighlight 
 					style={styles.button} 
 					onPress={this._onLogin.bind(this)}
@@ -144,11 +144,3 @@ class Login extends Component{
 }
 
 module.exports = Login;
-
-
-// <TouchableHighlight 
-//                     style={styles.button} 
-//                     onPress={this._onLogin_Local.bind(this)}
-//                     underlayColor="white">
-//                         <Text style={styles.buttonText}> Login </Text>
-//                 </TouchableHighlight>

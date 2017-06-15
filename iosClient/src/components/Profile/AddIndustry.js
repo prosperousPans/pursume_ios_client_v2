@@ -4,7 +4,8 @@ import {
   Text, 
   StyleSheet,
   TouchableHighlight,
-  AsyncStorage
+  AsyncStorage,
+  ScrollView
 } from 'react-native';
 import Separator from '../Utilities/Separator';
 import axios from 'axios';
@@ -25,6 +26,10 @@ class AddIndustry extends Component{
       'selectedIndustry': industry
     });
     this.updateIndustryDetails();
+  }
+
+  handleBack(tag){
+    this.props.navigator.pop();
   }
 
   async updateIndustryDetails(){
@@ -51,6 +56,7 @@ class AddIndustry extends Component{
   }
 
   render(){
+    const backIcon = (<Icon name="arrow-circle-left" size={30} color="#2196F3" />);
     var userInfo = this.props.data;
     var industryValues = ['Technology', 'BioMedical', 'Education', 'Finance/Banking', 'Retail/Ecommerce', 'Leisure/Travel', 'Gaming', 'Hardware', 'Enterprise Software/SAAS', 'Social', 'Service', 'Other'];
     var context = this;
@@ -76,9 +82,16 @@ class AddIndustry extends Component{
     })
     return(
       (userInfo) ? <View/> :  
-      <View style={styles.detailContainer}>
+      <ScrollView style={styles.detailContainer}>
+        <View style={styles.titleContainer}>
+          <TouchableHighlight
+          style={styles.backIcon}
+          onPress={ ()=>{this.handleBack()}}
+          >{backIcon}</TouchableHighlight>
+          <Text style={styles.titleText}>My Industry</Text>
+        </View>
         {list}
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -109,7 +122,24 @@ var styles = StyleSheet.create({
     fontSize: 15,
     fontFamily: 'Avenir-Medium',
     padding: 5,
-  }
+  },
+  backIcon:{
+    margin: 15,
+  },
+  titleContainer:{
+    flexDirection: 'row',
+    margin: 5,
+    padding:8,
+  },
+  titleText:{
+    marginTop: 12,
+    marginLeft: 45,
+    textAlign: 'center',
+    fontFamily: 'Avenir-Medium',
+    fontSize: 25,
+    fontWeight: 'bold',
+    color: '#2196F3'
+    },
 });
 
 module.exports = AddIndustry;

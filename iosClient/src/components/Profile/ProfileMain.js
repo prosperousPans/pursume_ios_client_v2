@@ -26,6 +26,7 @@ class ProfileMain extends Component {
             component: Profile,
             title:''
           }}
+        //to hide nav bar
         navigationBarHidden={true}
         style={{width: 375, height: 700}}
          />
@@ -34,3 +35,5 @@ class ProfileMain extends Component {
 }
 
 module.exports = ProfileMain;
+
+// navigationBarHidden={true}
