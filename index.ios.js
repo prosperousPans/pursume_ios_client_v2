@@ -22,7 +22,7 @@ const PursumeIOSApp = () => (
         style={styles.container}
         initialRoute={{
           title: '',
-          component: Login
+          component: Main
         }}
         navigationBarHidden={true}
          />

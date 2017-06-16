@@ -20,13 +20,13 @@ export class PersonalCard extends Component {
 
   render() {
     let currentProfile = this.props.currentMatch.profile[0];
-    const meIcon = (<Icon name="user-o" size={35} color="grey" />)
+    const personalIcon = (<Icon name="user-o" size={35} color="grey" />)
     const quoteIconLeft = (<Icon name="quote-left" size={15} color="#2196F3" />)
     const quoteIconRight = (<Icon name="quote-right" size={15} color="#2196F3" />)    
     return (
       <View>
         <View style={styles.titleContainer}>
-          <Text style={styles.cardTitleText}>{meIcon} About Me</Text>
+          <Text style={styles.cardTitleText}>{personalIcon} About Me</Text>
         </View>
 
         <View style={styles.mainContainer}>

@@ -6,6 +6,7 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
+  TouchableHighlight,
   Linking
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -60,36 +61,44 @@ export class HighlightsCard extends Component {
     const quoteIconLeft = (<Icon name="quote-left" size={15} color="#2196F3" />)
     const quoteIconRight = (<Icon name="quote-right" size={15} color="#2196F3" />)
 
+    const githubIcon = (<Icon name="github" size={22} color="white" />)
+    const linkedInIcon = (<Icon name="linkedin-square" size={20} color="white" />)
 
     console.log('currentProfile', currentProfile);
     return (
       <ScrollView >
-
-        <View style={ styles.imgHeader }>
-          <Image
-            style={styles.profileImg}
-            source={{uri: currentProfile.image}}
-          />
           <View>
-            <TouchableOpacity onPress={this.handleGitClick}>
-              <Image 
-                style={styles.iconImg}            
-                source={{uri:'https://assets-cdn.github.com/favicon.ico'}}
-              />
-            </TouchableOpacity>
-            <TouchableOpacity onPress={this.handleLNKDClick}>
-              <Image 
-                style={styles.iconImg}            
-                source={{uri:'https://www.iconfinder.com/data/icons/capsocial-round/500/linkedin-128.png'}}
-              />
-            </TouchableOpacity>          
-          </View>
-        </View>
+            <Image
+            source={{uri: currentProfile.image}}
+            style={styles.container}
+            blurRadius={45}>
 
-        <View style= { styles.nameSection }>
-          <Text style={styles.nameText}>{currentProfile.full_name}</Text>
-          <Text style={styles.industryText}>{currentProfile.vertical}</Text>
-        </View>
+              <View style={styles.imgHeader}>
+                <Image style={styles.image} source={{uri: currentProfile.image}} />
+                <View>
+                  <TouchableHighlight 
+                    style={styles.links} 
+                    underlayColor="transparent"  
+                    onPress={this.handleGitClick}>
+                    {githubIcon}
+                  </TouchableHighlight>
+                  <TouchableHighlight 
+                    style={styles.links} 
+                    underlayColor="transparent"  
+                    onPress={this.handleLNKDClick}>
+                    {linkedInIcon}
+                  </TouchableHighlight>
+                </View>
+              </View>
+              <View style= { styles.nameSection }>
+                <Text style={styles.nameText}>{currentProfile.full_name}</Text>
+                <Text style={styles.industryText}>{currentProfile.vertical}</Text>
+              </View>
+                
+            </Image>        
+              
+          </View>
+
 
         <View>
           <Separator/>
@@ -176,6 +185,7 @@ const styles = StyleSheet.create({
     padding: 12
   },
 
+
   //name + industry section 
   nameSection: {
     justifyContent: 'center',
@@ -184,36 +194,39 @@ const styles = StyleSheet.create({
   },  
   nameText: {
     alignSelf: 'center',  
-    color: 'grey',
+    color: 'white',
     fontFamily: 'Avenir-Medium',    
     fontSize: 25,
     fontWeight: 'bold',
   },
   industryText: {
     alignSelf: 'center',      
-    color: 'grey',
+    color: 'white',
     fontFamily: 'Avenir-Medium',    
     fontSize: 15,
-    // fontWeight: 'bold',
   },
 
   //profile pic, git + linkedin icons
+  container: {
+    height: 225,
+    paddingTop: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,.2)'
+  },
+  
   imgHeader: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  profileImg: {
-    height: 125,
-    width: 125,
+  image: {
+    height: 130,
+    width: 130,
+    borderWidth: 2.8,
+    borderColor: '#d6d7da',
     borderRadius: 65,
-    marginTop: 10,
-    alignSelf: 'center'
-  },
-  iconImg: {
-    height: 20,
-    width: 20,
-    marginTop: 10,
+    marginTop: 5,
     alignSelf: 'center'
   },
 

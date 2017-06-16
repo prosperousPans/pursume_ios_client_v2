@@ -1,5 +1,3 @@
-import { random, range, round } from "lodash";
-
 import React, {Component} from 'react';
 import { 
   StyleSheet,
@@ -9,92 +7,68 @@ import {
   AsyncStorage,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { getData } from '../../actions/Dashboard';
-import Separator from '../Utilities/Separator';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
-import { VictoryBar, VictoryPie } from "victory-native";
-import axios from 'axios';
+import { VictoryBar, VictoryChart, VictoryAxis, VictoryLabel} from "victory-native";
 
-export class TopIndustryGraph extends Component {
-  constructor (props){
-    super();
-    this.state = {
-      randomData: this.generateRandomData(),
-    }
-  }
-
-  componentDidMount() {
-    setInterval(this.updateDemoData.bind(this), 3000);
-  }  
-
-  generateRandomData(points = 6) {
-    return range(1, points + 1).map((i) => ({ x: i, y: i + random(-1, 2) }));
-  }
-
-  updateDemoData() {
-    this.setState({
-      randomData: this.generateRandomData()
-    });
-  }  
-
+export class TopReasonGraph extends Component {
   render() {
-    // {console.log(this.props,'this.props INSIDE DASHBOARD RENDER')}
-    const educationIcon = (<Icon name="graduation-cap" size={48} color="#2196F3" />)
-    const professionalIcon = (<Icon name="building-o" size={48} color="#2196F3" />)
-    const projectIcon = (<Icon name="laptop" size={48} color="#2196F3" />)    
-    // if (this.props.topVertical){
+    var data = [];
+    for (var key in this.props.allIndustry) {
+      data.push({industry: key, count: this.props.allIndustry[key]})
+    }
+
     return (
-      <View>
-        <VictoryPie
-          innerRadius={75}
-          labelRadius={125}
-          style={{ labels: { fontSize: 20 } }}
-          data={this.state.randomData}
-          animate={{ duration: 1500 }}
-        />
+      <View style={styles.graphContainer}>
+        <Text style={styles.medText}><Text style={styles.medTextBold}>Top Industry of Connections: </Text>{this.props.topVertical}</Text>
+        <VictoryChart
+          domainPadding={10}
+        >
+          <VictoryAxis
+          />    
+          <VictoryBar
+            responsive={true}
+            style={{
+              data: {width: 30, fill: (d) => d.y > 0 ? "grey" : "blue"},
+              tickLabels: {angle: -90}            
+            }}
+            data={data}
+            x="industry"
+            y='count'
+          />
+        </VictoryChart>
       </View>
     )
   }
 }
 
 const mapStateToProps = (state) => {
-  console.log('STATE IN mapStateToProps - Dashboard', state)
   return {
     ...state,
+    allConnect: state.Dashboard.allConnect, //all users that viewed you
+    allAccept: state.Dashboard.allAccept, //all users that accepted you
     percentMatches: state.Dashboard.percentMatches,
     topReason: state.Dashboard.topReason,
-    topVertical: state.Dashboard.topVertical
+    topVertical: state.Dashboard.topVertical,
+    allIndustry: state.Dashboard.allIndustry
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchData: (authid, config) => { dispatch( getData(authid, config) ) },
-  }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(TopIndustryGraph);
+export default connect(mapStateToProps)(TopReasonGraph);
 
 const styles = StyleSheet.create({
-  //padding 
-  rowContainer: {
+  graphContainer: {
+    alignSelf: 'center',
     padding: 12
   },  
-  topTextPerc: {
-    alignSelf: 'center',  
-    fontSize: 50,
+
+  medTextBold: {
+    alignSelf: 'center',      
+    color: 'grey',
     fontFamily: 'Avenir-Medium',    
+    fontSize: 15,
     fontWeight: 'bold',
-    color: '#2196F3',        
-  },
-  bigText: {
-    alignSelf: 'center',  
-    fontSize: 35,
-    fontFamily: 'Avenir-Medium',    
-    fontWeight: 'bold',
-    color: '#2196F3',        
-  },
+    color: 'black',    
+  }, 
   medText: {
     alignSelf: 'center',      
     color: 'grey',
@@ -102,13 +76,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: 'bold',
     color: 'grey',    
-  },  
-  smallText: {
-    alignSelf: 'center',      
-    color: 'grey',
-    fontFamily: 'Avenir-Medium',    
-    fontSize: 8,
-    fontWeight: 'bold',
-  },
+  }
+
 })
 
