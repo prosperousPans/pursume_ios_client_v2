@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Avenir-Medium',    
     fontSize: 15,
     fontWeight: 'bold',
-    color: 'grey',    
+    color: '#6F6B6C',    
   },
 
 })

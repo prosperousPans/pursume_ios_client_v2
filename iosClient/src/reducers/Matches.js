@@ -33,12 +33,19 @@ const Matches = (state = initialState, action) => {
       }
     }
                      
+    case 'SLIDE_OLD_MATCH':
+      return {
+        ...state
+      }
+
     case 'GET_MATCHES_ERROR':
       return {
         ...state,
         getMatchesError: action.getError,
         gettingMatches: false
       }
+
+
     default:
       return state;
   }

@@ -54,7 +54,6 @@ export class HighlightsCard extends Component {
     let currentMatchEduExp = this.props.currentMatch.eduExp;
     let currentMatchProfExp = this.props.currentMatch.profExp;
     let currentMatchProjExp = this.props.currentMatch.projExp;
-    const industryIcon = (<Icon name="industry" size={15} color="#2196F3" />)
     const educationIcon = (<Icon name="graduation-cap" size={15} color="#2196F3" />)
     const professionalIcon = (<Icon name="building-o" size={15} color="#2196F3" />)
     const projectIcon = (<Icon name="laptop" size={15} color="#2196F3" />)
@@ -122,7 +121,7 @@ export class HighlightsCard extends Component {
 
               </View>
               <View style={styles.contentContainer}>              
-                <Text style={styles.contentBold}>{currentMatchEduExp[0].organization}, </Text>
+                <Text style={styles.contentBold}>{currentMatchEduExp[0].organization} </Text>
                 <Text style={styles.content}>{currentMatchEduExp[0].role}</Text>
               </View> 
             </View> 
@@ -135,10 +134,9 @@ export class HighlightsCard extends Component {
               <View style={styles.titleContainer}>
                 <Text>{professionalIcon} <Text style={styles.rowTitle}>  Professional:</Text></Text>
               </View>
-              <View style={styles.contentContainer}>
-                <Text style={styles.contentBold}>{currentMatchProfExp[0].organization}, </Text>
+
+                <Text style={styles.contentBold}>{currentMatchProfExp[0].organization} </Text>
                 <Text style={styles.content}>{currentMatchProfExp[0].role}</Text>
-              </View>
             </View> 
           </View>
 
@@ -295,11 +293,7 @@ const styles = StyleSheet.create({
     paddingRight:30,
     paddingLeft:15
   },
-  contentContainer: {
-    flexDirection:'row', 
-    flexWrap:'wrap',
-    marginRight: 30  
-  },  
+
   contentBold: {
     fontSize: 13,
     fontFamily: 'Avenir-Medium',
@@ -309,6 +303,7 @@ const styles = StyleSheet.create({
   },
   content: {
     fontSize: 13,
+    marginLeft: 25,    
     fontFamily: 'Avenir-Medium',
     color: '#525050',
   },

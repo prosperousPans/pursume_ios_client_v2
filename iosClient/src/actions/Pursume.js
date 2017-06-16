@@ -54,12 +54,15 @@ export function sendResponse (response, users_a_auth_id, users_b_id, config) {
         
         //check only if status is accept    
         if (users_a_res === 'accept') {
-          axios.get('http://localhost:3000/check-match', {params: {
+          config.params = {
             users_a_id: users_a_id,
             users_b_id: users_b_id,
             status: 'accept'
-          }}, config)
+          }
+
+          axios.get('http://localhost:3000/check-match', config)
           .then( result => {
+            console.log('result inside CHECK MATCH', result)
             if (result.data.length === 1) {
               dispatch( sentResponse('MATCH') );
             } else {
