@@ -67,37 +67,32 @@ export class HighlightsCard extends Component {
     console.log('currentProfile', currentProfile);
     return (
       <ScrollView >
-          <View>
-            <Image
-            source={{uri: currentProfile.image}}
-            style={styles.container}
-            blurRadius={45}>
 
-              <View style={styles.imgHeader}>
-                <Image style={styles.image} source={{uri: currentProfile.image}} />
-                <View>
-                  <TouchableHighlight 
-                    style={styles.links} 
-                    underlayColor="transparent"  
-                    onPress={this.handleGitClick}>
-                    {githubIcon}
-                  </TouchableHighlight>
-                  <TouchableHighlight 
-                    style={styles.links} 
-                    underlayColor="transparent"  
-                    onPress={this.handleLNKDClick}>
-                    {linkedInIcon}
-                  </TouchableHighlight>
-                </View>
-              </View>
-              <View style= { styles.nameSection }>
-                <Text style={styles.nameText}>{currentProfile.full_name}</Text>
-                <Text style={styles.industryText}>{currentProfile.vertical}</Text>
-              </View>
-                
-            </Image>        
-              
+      <Image
+      source={{uri: currentProfile.image}}
+      style={styles.container}
+      blurRadius={45}>
+        <View style={styles.imageContainer}>
+          <Image style={styles.image} source={{uri: currentProfile.image}} />
+          <View>
+            <TouchableHighlight 
+            style={styles.links} 
+            underlayColor="transparent"  
+            onPress={this.handleGitClick}>
+            {githubIcon}
+            </TouchableHighlight>
+            <TouchableHighlight 
+            style={styles.links} 
+            underlayColor="transparent"  
+            onPress={this.handleLNKDClick}>
+            {linkedInIcon}
+            </TouchableHighlight>
           </View>
+        </View>
+        <Text style={styles.name}>{currentProfile.full_name}</Text>
+        <Text style={styles.handle}>{currentProfile.vertical}</Text>
+      </Image>
+
 
 
         <View>
@@ -185,7 +180,6 @@ const styles = StyleSheet.create({
     padding: 12
   },
 
-
   //name + industry section 
   nameSection: {
     justifyContent: 'center',
@@ -209,14 +203,15 @@ const styles = StyleSheet.create({
   //profile pic, git + linkedin icons
   container: {
     height: 225,
-    paddingTop: 12,
+    paddingTop: 8,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'rgba(0,0,0,.2)'
   },
   
-  imgHeader: {
-    flexDirection: 'row',
+  imageContainer: {
+    flexDirection:'row', 
+    flexWrap:'wrap',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -228,6 +223,27 @@ const styles = StyleSheet.create({
     borderRadius: 65,
     marginTop: 5,
     alignSelf: 'center'
+  },
+  name: {
+    alignSelf: 'center',
+    fontSize: 16,
+    marginTop: 10,
+    marginBottom: 5,
+    backgroundColor: 'transparent',
+    color: 'white',
+    fontFamily: 'Avenir-Medium',
+    fontWeight: 'bold'
+  },
+  handle: {
+    alignSelf: 'center',
+    fontSize: 15,
+    color: 'white',
+    backgroundColor: 'transparent',
+    fontFamily: 'Avenir-Medium'
+  },  
+  links:{
+    margin:5,
+    marginTop:2
   },
 
   //personal quotes
