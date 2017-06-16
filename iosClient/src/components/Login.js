@@ -4,6 +4,7 @@ import {
 	Text, 
 	StyleSheet,
 	TextInput,
+  Image,
 	TouchableHighlight,
 	AsyncStorage
  } from 'react-native';
@@ -11,6 +12,7 @@ import {
 import axios from 'axios';
 import Main from './Main.js'
 import Auth0Lock from 'react-native-lock';
+import PursumeLogo from '../PursumeLogo.png';
 
 var credentials = require('../../../config/config.js');
 var lock = new Auth0Lock(credentials.auth0);
@@ -24,6 +26,12 @@ var styles = StyleSheet.create({
       justifyContent: 'center',
       backgroundColor: '#fff'
   },
+  PursumeLogo: {
+    alignSelf: 'center',    
+    height: 140,
+    width: 140,
+    paddingBottom: 20,    
+  },  
   title: {
       marginBottom: 50,
       fontSize: 50,
@@ -131,7 +139,10 @@ class Login extends Component{
 	render(){
 		return(
 			<View style={styles.mainContainer}>
-				<Text style={styles.title}> Pursumé </Text>
+        <Image 
+          style={styles.PursumeLogo}
+          source={PursumeLogo} />
+        <Text style={styles.title}> Pursumé </Text>
 				<TouchableHighlight 
 					style={styles.button} 
 					onPress={this._onLogin.bind(this)}

@@ -72,7 +72,13 @@ export class Matches extends Component{
   _hideMatchModal() {
     this.setState({ isMatchedModalVisible: false })
     this.refs.slider.scrollBy(this.state.currentIndex * -1)
-    this.props.nextMatch();
+    AsyncStorage.multiGet(['userId','AuthToken' ], (err, result) => {
+      var authid = result[0][1];
+      var config = {
+        headers:{ 'Authorization': 'Bearer '+ result[1][1] }
+      }
+      this.props.nextMatch(authid, config);
+    })
   }
 
   checkMatch() {
@@ -82,7 +88,14 @@ export class Matches extends Component{
     } else {
       this._hideModal();
       this.refs.slider.scrollBy(this.state.currentIndex * -1)
-      this.props.nextMatch();
+
+      AsyncStorage.multiGet(['userId','AuthToken' ], (err, result) => {
+        var authid = result[0][1];
+        var config = {
+          headers:{ 'Authorization': 'Bearer '+ result[1][1] }
+        }
+        this.props.nextMatch(authid, config);
+      })
     }
   }
 
@@ -106,7 +119,6 @@ export class Matches extends Component{
   }  
 
   render() {
-    // {console.log(this.props, 'IN MATCHES COMPONENT RENDER') }
     if (this.props.currentMatch) {
       return(
         <View>
@@ -191,7 +203,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetch: (authid, config) => { dispatch( getMatches(authid, config) ) },
     pursume: (response, users_a_auth_id, users_b_id, config) => { dispatch( sendResponse(response, users_a_auth_id, users_b_id, config) ) },
-    nextMatch: () => { dispatch( nextMatch() ) }
+    nextMatch: (authid, config) => { dispatch( nextMatch(authid, config) ) }
   }
 };
 
