@@ -7,98 +7,85 @@ import {
   AsyncStorage,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { getData } from '../../actions/Dashboard';
-import Separator from '../Utilities/Separator';
-import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { VictoryBar, VictoryPie } from "victory-native";
-import axios from 'axios';
 
 export class TopReasonGraph extends Component {
-  constructor (props){
-    super();
-  }
-
   render() {
-    // {console.log(this.props,'this.props INSIDE DASHBOARD RENDER')}
-    const educationIcon = (<Icon name="graduation-cap" size={48} color="#2196F3" />)
-    const professionalIcon = (<Icon name="building-o" size={48} color="#2196F3" />)
-    const projectIcon = (<Icon name="laptop" size={48} color="#2196F3" />)    
-    // if (this.props.topVertical){
+    var allAcceptObj = {};
+
+    for (var i=0; i<this.props.allAccept.length; i++) {
+      var reason = this.props.allAccept[i].reason;
+      if (allAcceptObj[reason]) { allAcceptObj[reason]++;
+      } else { allAcceptObj[reason] = 1; }
+    }
+    let personal = allAcceptObj.personal || 0;
+    let education = allAcceptObj.education || 0;
+    let professional = allAcceptObj.professional || 0;
+    let project = allAcceptObj.project || 0;
+
     return (
-      <View>
+      <View style={styles.graphContainer}>
+        <Text style={styles.medText}><Text style={styles.medTextBold}>Top Reason for Connect: </Text>{this.props.topReason}</Text>
         <VictoryPie
+          responsive={true}
+          padding={{top: 30,left:65, right:65}}
           style={{
             labels: {
               fill: "white",
               stroke: "none",
-              fontSize: 15,
+              fontSize: 10,
               fontWeight: "bold"
             }
           }}
           data={[
-            { x: "<5", y: 6279 },
-            { x: "5-13", y: 9182 },
-            { x: "14-17", y: 5511 },
-            { x: "18-24", y: 7164 },
-            { x: "25-44", y: 6716 },
-            { x: "45-64", y: 4263 },
-            { x: "≥65", y: 7502 }
+            {x: `Personal: ${personal}`, y: personal},
+            {x: `Education: ${education}`, y: education},
+            {x: `Professional: ${professional}`, y: professional},
+            {x: `Project: ${project}`, y: project}
           ]}
-          innerRadius={70}
-          labelRadius={100}
+          innerRadius={55}
+          labelRadius={65}
           colorScale={[
-            "#D85F49",
-            "#F66D3B",
-            "#D92E1D",
-            "#D73C4C",
-            "#FFAF59",
-            "#E28300",
-            "#F6A57F"
+            "#2B98F0",
+            "#515153",
+            "#6F6B6C",
+            "#C9C9C9"
           ]}
-        />      
+        />
       </View>
     )
   }
 }
 
 const mapStateToProps = (state) => {
-  console.log('STATE IN mapStateToProps - Dashboard', state)
   return {
     ...state,
+    allConnect: state.Dashboard.allConnect, //all users that viewed you
+    allAccept: state.Dashboard.allAccept, //all users that accepted you
     percentMatches: state.Dashboard.percentMatches,
     topReason: state.Dashboard.topReason,
     topVertical: state.Dashboard.topVertical
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchData: (authid, config) => { dispatch( getData(authid, config) ) },
-  }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(TopReasonGraph);
+export default connect(mapStateToProps)(TopReasonGraph);
 
 const styles = StyleSheet.create({
   //padding 
-  rowContainer: {
+  graphContainer: {
+    alignSelf: 'center',
     padding: 12
   },  
-  topTextPerc: {
-    alignSelf: 'center',  
-    fontSize: 50,
+
+  medTextBold: {
+    alignSelf: 'center',      
+    color: 'grey',
     fontFamily: 'Avenir-Medium',    
+    fontSize: 15,
     fontWeight: 'bold',
-    color: '#2196F3',        
-  },
-  bigText: {
-    alignSelf: 'center',  
-    fontSize: 35,
-    fontFamily: 'Avenir-Medium',    
-    fontWeight: 'bold',
-    color: '#2196F3',        
-  },
+    color: 'black',    
+  }, 
   medText: {
     alignSelf: 'center',      
     color: 'grey',
@@ -106,13 +93,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: 'bold',
     color: 'grey',    
-  },  
-  smallText: {
-    alignSelf: 'center',      
-    color: 'grey',
-    fontFamily: 'Avenir-Medium',    
-    fontSize: 8,
-    fontWeight: 'bold',
-  },
+  }
 })
 

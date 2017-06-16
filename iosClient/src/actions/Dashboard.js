@@ -42,6 +42,13 @@ function gotTopVertical (results) {
   }
 };
 
+function gotAllIndustry (results) {
+  return {
+    type: 'GOT_ALL_INDUSTRY',
+    results
+  }
+};
+
 function getDataError(getError) {
   return {
     type: 'GET_DATA_ERROR',
@@ -65,9 +72,10 @@ export function getData (authid, config) {
         axios.get('http://localhost:3000/get-connect', config),
         axios.get('http://localhost:3000/get-connect/get-accept', config),
         axios.get('http://localhost:3000/get-connect/get-reason', config),
-        axios.get('http://localhost:3000/get-connect/get-vertical', config)
+        axios.get('http://localhost:3000/get-connect/get-vertical', config),
+        axios.get('http://localhost:3000/get-connect/get-all-industry', config)
       ])
-      .then(axios.spread( (allConnect, allAccept, topReason, topVertical) => {
+      .then(axios.spread( (allConnect, allAccept, topReason, topVertical, allIndustry) => {
         dispatch( gotAllConnect(allConnect.data) );
         dispatch( gotAllAccept(allAccept.data) );
 
@@ -76,6 +84,7 @@ export function getData (authid, config) {
 
         dispatch( gotTopReason(topReason.data) );
         dispatch( gotTopVertical(topVertical.data) );
+        dispatch( gotAllIndustry(allIndustry.data) );
       }))
       .catch ( error => {
         dispatch( getDataError(error) );

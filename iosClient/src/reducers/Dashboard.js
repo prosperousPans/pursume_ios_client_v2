@@ -4,6 +4,7 @@ const initialState = {
   allAccept: null,
   topReason: null,
   topVertical: null,
+  allIndustry: null,
   getDataError: null
 };
 
@@ -41,7 +42,13 @@ const Dashboard = (state = initialState, action) => {
         ...state,
         topVertical: action.results,
         gettingData: true        
-      }                  
+      }   
+    case 'GOT_ALL_INDUSTRY':
+      return {
+        ...state,
+        allIndustry: action.results,
+        gettingData: true        
+      }                        
     case 'GET_DATA_ERROR':
       return {
         ...state,
